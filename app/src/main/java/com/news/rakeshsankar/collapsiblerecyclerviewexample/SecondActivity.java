@@ -80,7 +80,7 @@ public class SecondActivity extends AppCompatActivity implements RecyclerViewCli
                 Log.v("JSON Response Volley error",error.toString());
             }
         });
-        queue.add(jsObjRequest);
+        NetworkLoader.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest,"Second");
     }
 
     public void updateView(List<Article> articles,RequestQueue queue){

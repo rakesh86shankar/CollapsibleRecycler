@@ -7,10 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void downloadData(){
 
-        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+       // RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         String url = "https://newsapi.org/v1/sources";
+
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("JSON Response Volley error",error.toString());
             }
         });
-        queue.add(jsObjRequest);
+        NetworkLoader.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest,"First");
     }
 
     public void updateView(){
