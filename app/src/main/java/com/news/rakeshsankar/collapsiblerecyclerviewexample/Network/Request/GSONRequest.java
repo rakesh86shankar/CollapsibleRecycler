@@ -1,15 +1,22 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Network.Request;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.NetworkInterfaceListener;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -29,7 +36,10 @@ public class GSONRequest<T> extends Request<T>{
     private static final String ERROR_CHARSET = "UTF-8";
     private Map<String, String> responseHeaders = new HashMap<>();
     private boolean responseModified = true;
+    int TIMEOUT = 2000;
     NetworkInterfaceListener<T> listener;
+    DefaultRetryPolicy defaultRetryPolicy = new DefaultRetryPolicy(TIMEOUT,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
     public GSONRequest(int method,Class<T> clazz, Map<String, String> headers,
                        String url, Response.ErrorListener listener,NetworkInterfaceListener<T> sucessListener) {
@@ -37,6 +47,7 @@ public class GSONRequest<T> extends Request<T>{
         this.clazz = clazz;
         this.headers = headers;
         this.listener = sucessListener;
+        this.setRetryPolicy(defaultRetryPolicy);
     }
 
     @Override
@@ -65,5 +76,22 @@ public class GSONRequest<T> extends Request<T>{
         listener.onNetworkResponseReceived(response);
     }
 
-
+    @Override
+    protected VolleyError parseNetworkError(VolleyError volleyError) {
+        String message = null;
+        if (volleyError instanceof NetworkError) {
+            message = "Cannot connect to Internet...Please check your connection!";
+        } else if (volleyError instanceof ServerError) {
+            message = "The server could not be found. Please try again after some time!!";
+        } else if (volleyError instanceof AuthFailureError) {
+            message = "Cannot connect to Internet...Please check your connection!";
+        } else if (volleyError instanceof ParseError) {
+            message = "Parsing error! Please try again after some time!!";
+        } else if (volleyError instanceof NoConnectionError) {
+            message = "Cannot connect to Internet...Please check your connection!";
+        } else if (volleyError instanceof TimeoutError) {
+            message = "Connection TimeOut! Please check your internet connection.";
+        }
+        return super.parseNetworkError(volleyError);
+    }
 }

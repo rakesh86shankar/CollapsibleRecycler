@@ -1,7 +1,8 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 

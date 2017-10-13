@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Model;
 
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 

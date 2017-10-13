@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,15 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONObject;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Adapters.NewsPaperArticlesAdapter;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.NetworkInterfaceListener;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.RecyclerViewClickListener;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.Article;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.ArticleList;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.ArticleListArray;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Network.NetworkLoader;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Network.Request.ArticleRequest;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.R;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
  * Created by rakesh sankar on 10/3/2017.
  */
 
-public class SecondActivity extends AppCompatActivity implements RecyclerViewClickListener {
+public class SecondActivity extends AppCompatActivity implements RecyclerViewClickListener,NetworkInterfaceListener<ArticleList> {
     public static String APIKey = "be9c63bd0fa94e8b85836fed535d73d0";
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -48,12 +49,13 @@ public class SecondActivity extends AppCompatActivity implements RecyclerViewCli
         setContentView(R.layout.list_layout);
         recyclerView = (RecyclerView) findViewById(R.id.list_view);
         layoutManager = new LinearLayoutManager(this);
-        downloadData(getIntent().getExtras().get("NewsPaper").toString());
+        downloadData(getIntent().getExtras().get("NewsPaper").toString(),"Latest");
     }
 
-    private void downloadData(String newsPaper) {
-      queue = Volley.newRequestQueue(SecondActivity.this);
-        String url = "https://newsapi.org/v1/articles?source=" + newsPaper/*the-next-web*/ + "&sortBy=latest&apiKey=" + APIKey;
+    private void downloadData(String newsPaper,String sortBy) {
+        new ArticleRequest(getApplicationContext(),SecondActivity.this,this).loadRequest(newsPaper, sortBy);
+   /*   queue = Volley.newRequestQueue(SecondActivity.this);
+        String url = "https://newsapi.org/v1/articles?source=" + newsPaper*//*the-next-web*//* + "&sortBy=latest&apiKey=" + APIKey;
         //be9c63bd0fa94e8b85836fed535d73d0";
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -80,7 +82,7 @@ public class SecondActivity extends AppCompatActivity implements RecyclerViewCli
                 Log.v("JSON Response Volley error",error.toString());
             }
         });
-        NetworkLoader.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest,"Second");
+        NetworkLoader.getInstance(getApplicationContext()).addToRequestQueue(jsObjRequest,"Second");*/
     }
 
     public void updateView(List<Article> articles,RequestQueue queue){
@@ -90,6 +92,23 @@ public class SecondActivity extends AppCompatActivity implements RecyclerViewCli
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(SecondActivity.this, DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onNetworkResponseReceived(ArticleList response) {
+        Log.v("NewsPaperObject>>",response.getArticles().toString());
+        List<Article> article =  response.getArticles();
+
+        for(int i = 0 ; i <article.size() ; i++){
+            Log.v("Toc check",article.get(i).getTitle());
+
+        }
+        updateView(response.getArticles(), NetworkLoader.getInstance(getApplicationContext()).getRequestQueue());
+    }
+
+    @Override
+    public void onNetworkFailure(String errorResponse) {
 
     }
 }

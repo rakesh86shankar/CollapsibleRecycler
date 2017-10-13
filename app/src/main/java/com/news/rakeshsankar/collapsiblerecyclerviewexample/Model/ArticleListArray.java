@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -21,7 +21,7 @@ public class ArticleListArray implements Parcelable {
     List<Article> articlesList = new ArrayList<Article>();
 
 
-    ArticleListArray() {
+    public ArticleListArray() {
         // initialization
         articlesList = new ArrayList<Article>();
     }

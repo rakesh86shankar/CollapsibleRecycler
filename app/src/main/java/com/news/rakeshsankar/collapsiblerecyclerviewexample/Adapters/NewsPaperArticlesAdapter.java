@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Adapters;
 
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.RecyclerViewClickListener;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.Article;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.R;
 
 import java.util.List;
 

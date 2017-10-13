@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners;
 
 import android.view.View;
 

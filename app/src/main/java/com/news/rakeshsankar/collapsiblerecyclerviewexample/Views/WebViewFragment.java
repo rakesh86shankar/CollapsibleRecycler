@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.TextView;
+
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.R;
 
 /**
  * Created by rakesh sankar on 10/9/2017.

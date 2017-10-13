@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Model;
 
 /**
  * Created by rakesh sankar on 9/12/2017.
@@ -7,9 +7,10 @@ package com.news.rakeshsankar.collapsiblerecyclerviewexample;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class NewsPaperObject implements Parcelable {
 
@@ -41,7 +42,11 @@ public class NewsPaperObject implements Parcelable {
     @Expose
     private List<String> sortBysAvailable = null;
 
-    protected NewsPaperObject(Parcel in) {
+    public NewsPaperObject(){
+
+    }
+
+    public NewsPaperObject(Parcel in) {
         id = in.readString();
         name = in.readString();
         description = in.readString();

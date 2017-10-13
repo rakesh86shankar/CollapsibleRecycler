@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.NewsPaperGenre;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.NewsPaperObject;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.R;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.NewPaperHolder;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.NewPaperTypeHolder;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.SecondActivity;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 

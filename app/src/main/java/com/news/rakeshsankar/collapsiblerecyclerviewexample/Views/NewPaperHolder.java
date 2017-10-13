@@ -1,10 +1,10 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Views;
 
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.R;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
 

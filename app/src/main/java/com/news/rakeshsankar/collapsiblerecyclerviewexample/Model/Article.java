@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Model;
 
 /**
  * Created by rakesh sankar on 10/3/2017.
@@ -31,7 +31,12 @@ public class Article implements Parcelable {
     @Expose
     private String publishedAt;
 
-    protected Article(Parcel in) {
+
+     public Article(){
+
+    }
+
+    public Article(Parcel in) {
         author = in.readString();
         title = in.readString();
         description = in.readString();

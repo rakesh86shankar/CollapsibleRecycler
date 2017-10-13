@@ -1,8 +1,11 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.Article;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.WebViewFragment;
 
 import java.util.List;
 
@@ -13,7 +16,7 @@ import java.util.List;
 public class WebViewAdapter extends FragmentStatePagerAdapter{
     List<Article> articleList;
 
-    WebViewAdapter(FragmentManager fragmentManager, List<Article> articleList){
+    public WebViewAdapter(FragmentManager fragmentManager, List<Article> articleList){
         super(fragmentManager);
         this.articleList = articleList;
     }

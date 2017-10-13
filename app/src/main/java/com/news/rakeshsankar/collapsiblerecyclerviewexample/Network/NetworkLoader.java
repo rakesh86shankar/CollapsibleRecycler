@@ -1,4 +1,4 @@
-package com.news.rakeshsankar.collapsiblerecyclerviewexample;
+package com.news.rakeshsankar.collapsiblerecyclerviewexample.Network;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -38,7 +38,7 @@ public class NetworkLoader {
     }
 
     public  static synchronized NetworkLoader getInstance(Context context){
-        if(networkLoader != null){
+        if(networkLoader == null){
             networkLoader = new NetworkLoader(context);
         }
         return networkLoader;
