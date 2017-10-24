@@ -2,7 +2,6 @@ package com.news.rakeshsankar.collapsiblerecyclerviewexample.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,7 +24,7 @@ import java.util.List;
  * Created by rakesh sankar on 10/3/2017.
  */
 
-public class SecondActivity extends AppCompatActivity implements RecyclerViewClickListener,NetworkInterfaceListener<ArticleList> {
+public class SecondActivity extends BaseActivity implements RecyclerViewClickListener,NetworkInterfaceListener<ArticleList> {
     public static String APIKey = "be9c63bd0fa94e8b85836fed535d73d0";
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -109,6 +108,7 @@ public class SecondActivity extends AppCompatActivity implements RecyclerViewCli
 
     @Override
     public void onNetworkFailure(String errorResponse) {
-
+        //Toast.makeText(SecondActivity.this,"Network Error:"+errorResponse,Toast.LENGTH_LONG).show();
+        showToastDialog(errorResponse);
     }
 }

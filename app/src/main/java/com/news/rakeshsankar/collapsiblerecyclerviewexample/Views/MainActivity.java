@@ -27,11 +27,14 @@ public class MainActivity extends BaseActivity implements NetworkInterfaceListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.v("Main Activity","OKKOKOMK");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL_LIST));
         layoutManager = new LinearLayoutManager(this);
         new NewsPaperListRequest(getApplicationContext(),MainActivity.this,this).loadRequest();
     }
+
+
 
     public void downloadData(NewsPaperList newsPaperList){
         HashMap<String,NewsPaperGenre> newsPaperCollection = new HashMap<>();
@@ -74,5 +77,6 @@ public class MainActivity extends BaseActivity implements NetworkInterfaceListen
     @Override
     public void onNetworkFailure(String errorResponse) {
         Log.v("On NetworkFailure>>",""+errorResponse);
+        showToastDialog(errorResponse);
     }
 }

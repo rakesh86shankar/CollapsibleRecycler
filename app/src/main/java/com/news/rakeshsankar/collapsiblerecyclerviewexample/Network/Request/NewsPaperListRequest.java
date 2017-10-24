@@ -1,35 +1,36 @@
 package com.news.rakeshsankar.collapsiblerecyclerviewexample.Network.Request;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.NetworkInterfaceListener;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.NewsPaperList;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.BaseActivity;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.ProgressBarHandler;
 
 /**
  * Created by rakesh sankar on 10/13/2017.
  */
 
-public class NewsPaperListRequest extends BaseRequest {
+public class NewsPaperListRequest extends BaseRequest implements NetworkInterfaceListener<Object> {
     String url = "https://newsapi.org/v1/sources";
     Response.ErrorListener errorListener = null;
     NetworkInterfaceListener networkInterfaceListener;
-    Activity currentActivity;
+    BaseActivity currentActivity;
+    ProgressBarHandler progressBarHandler;
 
-    public NewsPaperListRequest(Context context, final Activity currentActivity , NetworkInterfaceListener networkInterfaceListener) {
+    public NewsPaperListRequest(Context context, final BaseActivity currentActivity , NetworkInterfaceListener networkInterfaceListener) {
         super(context);
         this.networkInterfaceListener = networkInterfaceListener;
         this.currentActivity = currentActivity;
         errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("Network Failure>",error.getMessage());
-                Toast.makeText(currentActivity,"Network Error:"+error.getMessage(),Toast.LENGTH_LONG).show();
+                Log.v("NewsPaperRequest Failure>",error.toString());
+                currentActivity.showToastDialog(error.toString());
             }
         };
     }
@@ -39,5 +40,16 @@ public class NewsPaperListRequest extends BaseRequest {
                 null,url,errorListener,networkInterfaceListener);
         newsPaperListGSONRequest.setRetryPolicy(defaultRetryPolicy);
         requestQueue.add(newsPaperListGSONRequest);
+        currentActivity.showProgressDialog();
+    }
+
+    @Override
+    public void onNetworkResponseReceived(Object response) {
+        currentActivity.dismissProgressDialog();
+    }
+
+    @Override
+    public void onNetworkFailure(String errorResponse) {
+        currentActivity.showProgressDialog();
     }
 }
