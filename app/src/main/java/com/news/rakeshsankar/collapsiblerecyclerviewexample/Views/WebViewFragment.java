@@ -2,10 +2,12 @@ package com.news.rakeshsankar.collapsiblerecyclerviewexample.Views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.R;
 
@@ -16,6 +18,7 @@ import com.news.rakeshsankar.collapsiblerecyclerviewexample.R;
 public class WebViewFragment extends Fragment {
     int position = 0;
     String webViewURL;
+    ContentLoadingProgressBar contentLoadingProgressBar;
 
     public static WebViewFragment newInstance(int page, String title) {
         WebViewFragment fragmentFirst = new WebViewFragment();
@@ -40,7 +43,17 @@ public class WebViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_webview_fragment, container, false);
         WebView webView = (WebView) view.findViewById(R.id.webView);
+        contentLoadingProgressBar = (ContentLoadingProgressBar) view.findViewById(R.id.address_looking_up);
+        contentLoadingProgressBar.show();
         webView.loadUrl(webViewURL);
+
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                contentLoadingProgressBar.hide();
+            }
+        });
         return view;
     }
 

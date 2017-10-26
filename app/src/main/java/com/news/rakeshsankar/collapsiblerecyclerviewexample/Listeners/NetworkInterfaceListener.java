@@ -10,7 +10,7 @@ public interface NetworkInterfaceListener<T> {
 
     public void onNetworkResponseReceived(T response);
 
-    public void onNetworkFailure(String errorResponse);
 
+    public void onNetworkFailure(String errorResponse);
 
 }

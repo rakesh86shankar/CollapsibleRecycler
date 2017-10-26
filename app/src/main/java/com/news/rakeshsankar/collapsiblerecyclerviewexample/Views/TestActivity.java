@@ -17,8 +17,8 @@ public class TestActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview_holder);
-        contentLoadingProgressBar = new ContentLoadingProgressBar(TestActivity.this);
-        //progressBarHandler = new ProgressBarHandler(this);
+        //contentLoadingProgressBar = new ContentLoadingProgressBar(TestActivity.this);
+        progressBarHandler = new ProgressBarHandler(this);
 
 
     }
@@ -26,11 +26,11 @@ public class TestActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        contentLoadingProgressBar.show();
+        progressBarHandler.show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                contentLoadingProgressBar.hide();
+                progressBarHandler.hide();
             }
         }, 5000);
     }

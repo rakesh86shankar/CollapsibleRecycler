@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.NetworkInterfaceListener;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.NetworkRequestCallBackListener;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -38,15 +39,19 @@ public class GSONRequest<T> extends Request<T>{
     private boolean responseModified = true;
     int TIMEOUT = 2000;
     NetworkInterfaceListener<T> listener;
+    NetworkRequestCallBackListener<T> networkRequestCallBackListener;
     DefaultRetryPolicy defaultRetryPolicy = new DefaultRetryPolicy(TIMEOUT,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
     public GSONRequest(int method,Class<T> clazz, Map<String, String> headers,
-                       String url, Response.ErrorListener listener,NetworkInterfaceListener<T> sucessListener) {
+                       String url, Response.ErrorListener listener,
+                       NetworkInterfaceListener<T> sucessListener,
+                       NetworkRequestCallBackListener<T> networkRequestCallBackListener) {
         super(method, url, listener);
         this.clazz = clazz;
         this.headers = headers;
         this.listener = sucessListener;
+        this.networkRequestCallBackListener = networkRequestCallBackListener;
         this.setRetryPolicy(defaultRetryPolicy);
     }
 
@@ -74,6 +79,7 @@ public class GSONRequest<T> extends Request<T>{
     @Override
     protected void deliverResponse(T response) {
         listener.onNetworkResponseReceived(response);
+        networkRequestCallBackListener.onResponseReceived(response);
     }
 
     @Override

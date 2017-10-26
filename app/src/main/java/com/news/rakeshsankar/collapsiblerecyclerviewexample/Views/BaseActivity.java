@@ -38,7 +38,8 @@ public class BaseActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressBarHandler.show();
+                if(progressBarHandler!=null)
+                    progressBarHandler.show();
             }
         },500);
     }
@@ -47,9 +48,10 @@ public class BaseActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressBarHandler.hide();
+                if(progressBarHandler!=null)
+                    progressBarHandler.hide();
             }
-        }, 2000);
+        }, 500);
     }
 
 }

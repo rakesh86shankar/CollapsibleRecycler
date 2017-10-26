@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.NetworkInterfaceListener;
+import com.news.rakeshsankar.collapsiblerecyclerviewexample.Listeners.NetworkRequestCallBackListener;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.NewsPaperList;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.BaseActivity;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.ProgressBarHandler;
@@ -15,7 +16,7 @@ import com.news.rakeshsankar.collapsiblerecyclerviewexample.Views.ProgressBarHan
  * Created by rakesh sankar on 10/13/2017.
  */
 
-public class NewsPaperListRequest extends BaseRequest implements NetworkInterfaceListener<Object> {
+public class NewsPaperListRequest extends BaseRequest implements NetworkRequestCallBackListener<NewsPaperList> {
     String url = "https://newsapi.org/v1/sources";
     Response.ErrorListener errorListener = null;
     NetworkInterfaceListener networkInterfaceListener;
@@ -37,19 +38,20 @@ public class NewsPaperListRequest extends BaseRequest implements NetworkInterfac
 
     public void loadRequest(){
         GSONRequest<NewsPaperList> newsPaperListGSONRequest = new GSONRequest(Request.Method.GET,NewsPaperList.class,
-                null,url,errorListener,networkInterfaceListener);
+                null,url,errorListener,networkInterfaceListener,this);
         newsPaperListGSONRequest.setRetryPolicy(defaultRetryPolicy);
         requestQueue.add(newsPaperListGSONRequest);
         currentActivity.showProgressDialog();
     }
 
-    @Override
-    public void onNetworkResponseReceived(Object response) {
+
+
+    public void onNetworkFailure(String errorResponse) {
         currentActivity.dismissProgressDialog();
     }
 
     @Override
-    public void onNetworkFailure(String errorResponse) {
-        currentActivity.showProgressDialog();
+    public void onResponseReceived(NewsPaperList response) {
+        currentActivity.dismissProgressDialog();
     }
 }
