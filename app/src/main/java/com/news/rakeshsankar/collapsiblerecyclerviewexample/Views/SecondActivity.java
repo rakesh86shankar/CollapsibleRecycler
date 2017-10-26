@@ -48,7 +48,8 @@ public class SecondActivity extends BaseActivity implements RecyclerViewClickLis
         setContentView(R.layout.list_layout);
         recyclerView = (RecyclerView) findViewById(R.id.list_view);
         layoutManager = new LinearLayoutManager(this);
-        downloadData(getIntent().getExtras().get("NewsPaper").toString(),"Latest");
+        Bundle bundle = getIntent().getExtras();
+        downloadData(bundle.get("NewsPaper").toString(),bundle.get("SortBy").toString());
     }
 
     private void downloadData(String newsPaper,String sortBy) {

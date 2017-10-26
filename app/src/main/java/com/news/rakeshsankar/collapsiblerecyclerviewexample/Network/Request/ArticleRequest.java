@@ -28,7 +28,8 @@ public class ArticleRequest extends BaseRequest implements NetworkRequestCallBac
         super(context);
         this.networkInterfaceListener = networkInterfaceListener;
         this.currentActivity = currentActivity;
-        errorListener = new Response.ErrorListener() {
+        errorListener =
+                new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                  //networkInterfaceListener.onNetworkFailure(error.toString());
@@ -39,7 +40,7 @@ public class ArticleRequest extends BaseRequest implements NetworkRequestCallBac
     }
 
     public void loadRequest(String newsPaper,String sortBy){
-        url =  "https://newsapi.org/v1/articles?source="+ newsPaper+ "&sortBy=latest&apiKey=" + APIKey;
+        url =  "https://newsapi.org/v1/articles?source="+ newsPaper+ "&sortBy="+sortBy+"&apiKey=" + APIKey;
         GSONRequest<ArticleList> articleListGSONRequest = new GSONRequest(Request.Method.GET,ArticleList.class,
                 null,url,errorListener,networkInterfaceListener,this);
         requestQueue.add(articleListGSONRequest);

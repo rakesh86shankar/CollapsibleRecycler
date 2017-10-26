@@ -1,11 +1,14 @@
 package com.news.rakeshsankar.collapsiblerecyclerviewexample.Adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.NewsPaperGenre;
 import com.news.rakeshsankar.collapsiblerecyclerviewexample.Model.NewsPaperObject;
@@ -52,9 +55,10 @@ public class GenreAdapter extends ExpandableRecyclerViewAdapter<NewPaperTypeHold
             @Override
             public void onClick(View v) {
                 Log.v("On Child Item Clicked>>>",""+flatPosition);
-                Intent myIntnent = new Intent(currentActivity,SecondActivity.class);
-                myIntnent.putExtra("NewsPaper", newsPaper.getName());
-                currentActivity.startActivity(myIntnent);
+                List<String> sortBy = newsPaper.getSortBysAvailable();
+                String[] sortByArray = sortBy.toArray(new String[sortBy.size()]);
+                sortByDialog(sortByArray,newsPaper.getId());
+
 
             }
         });
@@ -66,5 +70,36 @@ public class GenreAdapter extends ExpandableRecyclerViewAdapter<NewPaperTypeHold
         holder.setNewsPaperGenreTitle(group);
     }
 
+
+    public void sortByDialog(String sortBy[], final String newsPaperName){
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(currentActivity);
+        builderSingle.setIcon(R.drawable.ic_banjo);
+        builderSingle.setTitle("Sort By:-");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(currentActivity, android.R.layout.select_dialog_singlechoice);
+        for(String s : sortBy)
+            arrayAdapter.add(s);
+
+
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String sortByType = arrayAdapter.getItem(which);
+                Intent myIntnent = new Intent(currentActivity,SecondActivity.class);
+                myIntnent.putExtra("NewsPaper", newsPaperName);
+                myIntnent.putExtra("SortBy", sortByType);
+                currentActivity.startActivity(myIntnent);
+
+            }
+        });
+        builderSingle.show();
+    }
 
 }
